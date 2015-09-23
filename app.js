@@ -17,14 +17,19 @@ io.sockets.on('connection',function(socket) {
 
   //メッセージ送信ハンドラ（自分を含む全員宛に送る）
   socket.on( 'c2s_message', function( data ) {
-      // サーバーからクライアントへ メッセージを送り返し
-      io.sockets.emit( 's2c_message', { value : data.value } );
+
+    // room機能
+    socket.join(data.room);
+
+    // サーバーからクライアントへ メッセージを送り返し
+    console.log(data);
+    io.sockets.emit( 's2c_message', { value : data.value, id: socket.id } );
   });
 
   //メッセージ送信ハンドラ（自分以外の全員宛に送る）
-   socket.on( 'c2s_broadcast', function( data ) {
-       // サーバーからクライアントへ メッセージを送り返し
-       socket.broadcast.emit( 's2c_message', { value : data.value } );
-   });
+  socket.on( 'c2s_broadcast', function( data ) {
+    // サーバーからクライアントへ メッセージを送り返し
+    socket.broadcast.emit( 's2c_message', { value : data.value } );
+  });
 
 });
