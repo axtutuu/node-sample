@@ -31,6 +31,7 @@ io.sockets.on('connection',function(socket) {
 
     // room機能
     socket.join(data.room);
+    console.log(data);
     // サーバーからクライアントへ メッセージを送り返し
     socket.broadcast.to(data.room).emit( 's2c_message', { value : data.value } );
   });
