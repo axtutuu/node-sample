@@ -32,7 +32,7 @@ io.sockets.on('connection',function(socket) {
     // room機能
     socket.join(data.room);
     // サーバーからクライアントへ メッセージを送り返し
-    socket.broadcast.emit( 's2c_message', { value : data.value } );
+    socket.broadcast.to(data.room).emit( 's2c_message', { value : data.value } );
   });
 
 });
