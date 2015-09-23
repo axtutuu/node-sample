@@ -28,6 +28,9 @@ io.sockets.on('connection',function(socket) {
 
   //メッセージ送信ハンドラ（自分以外の全員宛に送る）
   socket.on( 'c2s_broadcast', function( data ) {
+
+    // room機能
+    socket.join(data.room);
     // サーバーからクライアントへ メッセージを送り返し
     socket.broadcast.emit( 's2c_message', { value : data.value } );
   });
