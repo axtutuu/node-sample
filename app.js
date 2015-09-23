@@ -23,7 +23,7 @@ io.sockets.on('connection',function(socket) {
 
     // サーバーからクライアントへ メッセージを送り返し
     console.log(data);
-    io.sockets.emit( 's2c_message', { value : data.value, id: socket.id } );
+    io.sockets.to(data.room).emit( 's2c_message', { value : data.value, id: socket.id } );
   });
 
   //メッセージ送信ハンドラ（自分以外の全員宛に送る）
