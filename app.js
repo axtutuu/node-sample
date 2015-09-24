@@ -15,11 +15,14 @@ var io = socketio.listen(server);
 //接続確立後の通信処理部分を定義
 io.sockets.on('connection',function(socket) {
 
+  // 接続確立後にルームに入れる
+  socket.on('join_room', function(data) {
+    console.log(data);
+    socket.join(data.room);
+  });
+
   //メッセージ送信ハンドラ（自分を含む全員宛に送る）
   socket.on( 'c2s_message', function( data ) {
-
-    // room機能
-    socket.join(data.room);
 
     // サーバーからクライアントへ メッセージを送り返し
     console.log(data);
@@ -28,9 +31,6 @@ io.sockets.on('connection',function(socket) {
 
   //メッセージ送信ハンドラ（自分以外の全員宛に送る）
   socket.on( 'c2s_broadcast', function( data ) {
-
-    // room機能
-    socket.join(data.room);
 
     console.log(data);
     // サーバーからクライアントへ メッセージを送り返し
