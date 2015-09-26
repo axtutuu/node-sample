@@ -22,22 +22,6 @@ io.sockets.on('connection',function(socket) {
   socket.on('join_room', function(data) {
     console.log(data);
     socket.join(data.room);
-
-    // user_nameのpost処理
-    var options = {
-      uri: 'http://localhost:3000/users',
-      form: { name: socket.id},
-      json: true
-    };
-
-    request.post(options, function(error, response, body){
-      if (!error && response.statusCode == 200) {
-        console.log(body.name);
-      } else {
-        console.log('error: '+ response.statusCode);
-      }
-    });
-
   });
 
   //メッセージ送信ハンドラ（自分を含む全員宛に送る）
